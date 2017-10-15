@@ -1,0 +1,41 @@
+
+异常处理：
+
+    覆盖重写TP本身的异常处理类Handler里的render方法
+
+    1.建立Exception目录
+
+    2.创建ExceptionHandler类，继承Handler，创建3个自定义属性，实现render方法.
+
+    render方法内部分为两块：1.类型是BaseException的异常都是客户端传入了错误参数导致异常，需要返回客户端明确告知给用户的异常（如没有id=28的数据）。
+             2.否则就是服务器内部错误，不明确告诉用户的异常。错误码999（实现调用DEBUG作为开关在开发模式下返回原始的页面异常，便于开发）
+
+    3.创建BaseException类，创建3个自定义属性，继承Exception，实现构造函数->
+      用于让外面的异常可以接受自定义的参数：如：throw new testException(['msg'=>'查询数据不存在']);
+
+    4.创建CheckParamException类，创建3个自定义属性，继承BaseException，用于参数验证错误抛出.
+
+    5.创建QueryDbException类，创建3个自定义属性，继承BaseException，用于数据库查询错误抛出.
+
+
+开发流程：
+
+    1.建立validate模块，验证客户端传过来的参数是否合法，（是否是正整数？），在Basevalidate类里实现goCheck方法.
+
+    2.建立异常模块，继承Handler类并重写render方法.
+
+    3.处理日志记录，实现recordErrorLog方法，服务器内部错误时记录日志.
+
+    4.实现配置中debug开关控制服务器内部错误时返回原始错误页面，生产模式下返回自定义的JSON形式错误.
+
+    5.实现入口文件index.php里的sql日志记录.
+        \think\Log::init([
+                'type'  => 'file',
+                // 日志保存目录
+                'path'  => LOG_PATH,
+                // 日志记录级别
+                'level' => ['sql'],
+        ]);
+
+    5.实现让自定义的异常类可以传入自定义参数，如：throw new testException(['msg'=>'查询数据不存在'])
+      在BaseException里实现构造函数接受一个数组，判断数组中是否有传入的参数，覆盖.(详见BaseException的构造函数)
