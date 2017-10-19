@@ -1,3 +1,21 @@
+        零碎知识：1.dataBase里数据集返回类型
+           'resultset_type'  => 'array',可以用于设置模型查询返回的数据类型，默认返回数组，可以改成返回数据集collection.可以直接用比如：hidden(),visible()这些方法了
+            注：如果数据返回类型改为collection，在判断是否查询到数据时不能用！判断了：if（!$data）要用自带的方法isEmpty()判断：if($data->isEmpty()).
+
+         关于模型：
+            1.查询 -> 数据库没有这条数据，find返回null，select返回数组[0].
+            2.新增 -> 数据，静态方法create返回模型对象，save()新增返回写入记录数，saveAll()批量新增返回包含自增id的数据集
+            3.更新 -> save()方法返回同上，update()返回影响数据的条数，没修改任何数据返回0
+                实例化模型后调用save方法表示新增；!!
+                查询数据后调用save方法表示更新；!!
+                save方法传入更新条件后表示更新；!!
+
+         关于缓存：
+            1.cache方法返回布尔值.
+
+         系统常量：
+            获取当前时间戳：$_SERVER['REQUEST_TIME'].
+
 
 异常处理：
 
@@ -39,3 +57,39 @@
 
     5.实现让自定义的异常类可以传入自定义参数，如：throw new testException(['msg'=>'查询数据不存在'])
       在BaseException里实现构造函数接受一个数组，判断数组中是否有传入的参数，覆盖.(详见BaseException的构造函数)
+
+    -----------------------------------------实现Token体系----------------------------------------------
+
+    6.控制器中建立Token类,建立一个service目录处理有关Token的逻辑，service目录创建UserToken类：
+
+      Token类：
+        BaseToken类：
+            1.准备Token的value -> prepare_Token_Value()
+            2.准备Token的key -> prepare_Token_Key()
+            3.根据传入的参数获取token里value中想要的值 -> get_Token_Value_Vars()
+            4.获取token里value中uid的值 -> get_Token_Uid()
+
+
+        UserToken类:
+            1.构造函数，接受code，负责拼接微信url换取openid.
+            2.用户登录,获取token,发送网络请求，获取微信返回的结果,生成token缓存,返回token缓存的key -> get_Token_Service()
+            3.授予Token(创建用户),接受微信返回的数据,查询用户数据，没有则新增，获取用户id,返回缓存的key -> grantToken($wxResult)
+            4.缓存token,接受微信返回的数据；用户id等等..，封装后写入缓存,返回缓存的key -> save_Cache_Token($wxResult,$uid)
+
+         1.4个成员变量，用于拼接微信换取openid的url，    protected $code; protected $wxAppID; protected $wxAppSecret; protected $loginUrl;
+         2.extra目录创建一个wx_config配置文件，用于配置微信的appid,secret,url等.
+         3.构造函数，接受code，负责拼接微信换取openid的url.使用到一个占位符函数sprintf().
+         4.实现get_Token_Service的逻辑：
+           1.获取code发送网络请求给微信换取微信的返回结果.公共文件common中实现curl_get网络请求函数.
+           2.微信返回的结果是字符串，用json_decode转化为数组.
+           3.检测返回结果，是否为空，抛出微信系统异常，记录日志.
+                            throw new Exception('微信内部错误，获取openid和session_key异常');
+           4.再次检测返回结果中是否有errcode参数，抛出返回客户端的异常.
+                            throw new WeChatException([
+                                'msg' => $wxResult['errmsg'],
+                                'errorCode' => $wxResult['errcode']
+                            ]);
+           5.新建grantToken处理微信返回的数据，获取openid->查询数据库，是否新增用户，生成令牌，缓存起来，返回令牌给客户端.
+
+         5.
+

@@ -37,4 +37,10 @@ class Job
         }
         return $job_detail;
     }
+
+    //创建岗位？
+
+    //更新岗位？
+
+    //删除岗位？
 }

@@ -9,10 +9,8 @@
 namespace app\api\model;
 
 
-use think\Model;
-use think\Db;
 
-class Job extends Model
+class Job extends BaseModel
 {
 
     //只显示-工作名称-薪资水平-工作范围-公司关联信息-福利-创建时间
@@ -20,9 +18,13 @@ class Job extends Model
 
     //查询岗位列表API
     public static function get_Job_List_Model(){
-        return self::field('job_description,Job_requirements,delete_time',true)->
+        $data = self::
+        field('job_description,Job_requirements,delete_time',true)->
+        order('set_top desc,welfare desc')->
         with(['company'=>function($query){$query->withField('id,company_name');}])->
         select();
+
+        return $data;
     }
 
     //定义关联方法->工作列表关联到公司
