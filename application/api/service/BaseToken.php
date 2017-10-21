@@ -47,6 +47,9 @@ class BaseToken
     public static function get_Token_Value_Vars($key){
         //从请求中的header里获取token的key
         $token_key = Request::instance()->param('token_key');
+        if(empty($token_key)){
+            throw new TokenException(['msg' => '必须携带token，来自get_Token_Value_Vars']);
+        }
         //根据token_key取缓存,并判断是否获取成功
         $vars = cache($token_key);
         //如果获取缓存失败，抛出异常
