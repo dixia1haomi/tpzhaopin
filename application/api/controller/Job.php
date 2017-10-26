@@ -20,13 +20,13 @@ use app\api\model\Job as JobModel;
 class Job
 {
     //查询岗位列表API
-    public function get_Job_List(){
+    public function get_Job_List($work_area){
 
         (new MustBePositiveIntValidate())->goCheck();
 
-        $jobList = JobModel::get_Job_List_Model();
+        $jobList = JobModel::get_Job_List_Model($work_area);
         if(!$jobList){
-            throw new QueryDbException(['msg'=>'查询数据不存在,来自查询岗位列表']);
+            throw new QueryDbException(['msg'=>'查询数据不存在,来自查询岗位列表','code'=>401]);
         }
         return $jobList;
     }
@@ -39,7 +39,7 @@ class Job
 
         $job_detail = JobModel::get_Job_Detail_Model($id);
         if(!$job_detail){
-            throw new QueryDbException(['msg'=>'查询数据不存在,来自查询岗位详细信息']);
+            throw new QueryDbException(['msg'=>'查询数据不存在,来自查询岗位详细信息','code'=>401]);
         }
         return $job_detail;
     }
@@ -71,7 +71,7 @@ class Job
         $jobModel = new JobModel();
         $result = $jobModel->isUpdate(false)->save($data);
         if(!$result){
-            throw new QueryDbException(['msg' => '新增岗位失败，create_job']);
+            throw new QueryDbException(['msg' => '新增岗位失败，create_job','code'=>401]);
         }
         return new QueryDbException(['msg' => '新增岗位成功,ID='.$jobModel->id.'，来自create_Job()']);
     }
@@ -95,7 +95,7 @@ class Job
         $jobModel = new JobModel();
         $result = $jobModel->isUpdate(true)->save($data);
         if(!$result){
-            throw new QueryDbException(['msg' => '更新岗位失败，来自update_Job()']);
+            throw new QueryDbException(['msg' => '更新岗位失败，来自update_Job()','code'=>401]);
         }
         return new QueryDbException(['msg' => '更新公司成功,ID='.$jobModel->id.'，来自update_Job()']);
     }
@@ -108,7 +108,7 @@ class Job
         $result = JobModel::destroy($job_id);
 
         if(!$result){
-            throw new QueryDbException(['msg'=>'删除岗位信息失败,来自delete_Job()']);
+            throw new QueryDbException(['msg'=>'删除岗位信息失败,来自delete_Job()','code'=>401]);
         }
         return new QueryDbException(['msg'=>'删除公司成功,影响数据'.$result.'条，来自delete_Job()']);
     }

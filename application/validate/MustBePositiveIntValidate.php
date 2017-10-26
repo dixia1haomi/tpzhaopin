@@ -15,7 +15,7 @@ class MustBePositiveIntValidate extends BaseValidate
 {
     //验证规则
     protected $rule = [
-        'id'=>'number|>:0', //必须是数字,必须大于0
+        'id'=>'number', //必须是数字
     ];
 
 }

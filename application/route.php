@@ -16,9 +16,17 @@ use think\Route;
 //token组
 Route::post('api/token/user','api/token/getToken'); //获取Token
 
+
+//User组
+Route::post('api/user','api/user/getUser_Detail'); //获取Token
+Route::post('api/user/job','api/user/getUser_Job'); //获取Token
+Route::post('api/user/company','api/user/getUser_Company'); //获取Token
+Route::post('api/user/resume','api/user/getUser_Resume'); //获取Token
+
+
 //岗位组
-Route::get('api/job','api/job/get_Job_List'); //查询岗位列表
-Route::get('api/job/:id','api/job/get_Job_Detail'); //查询岗位详细信息
+Route::get('api/job/:work_area','api/job/get_Job_List'); //查询岗位列表
+Route::get('api/job/detail/:id','api/job/get_Job_Detail'); //查询岗位详细信息
 Route::post('api/job/create','api/job/create_Job'); //新增岗位
 Route::post('api/job/update','api/job/update_Job'); //更新岗位
 Route::post('api/job/delete','api/job/delete_Job'); //删除岗位

@@ -7,7 +7,8 @@
  */
 
 namespace app\api\controller;
-
+use app\api\model\User as UserModel;
+use app\exception\QueryDbException;
 
 class User
 {
@@ -42,16 +43,46 @@ class User
 
     //更新用户？
 
-    //查询用户？
+    //查询用户详细信息
+    public function getUser_Detail(){
+        $result = UserModel::getUser_Detail_Model();
+        if(!$result){
+            throw new QueryDbException(['msg'=>'查询用户失败']);
+        }
+        return $result;
+    }
 
     //登录？
 
     //登出？
 
-    //用户关联简历？
+    //用户关联简历？getUser_Resume_Model
+    public function getUser_Resume(){
+        $result = UserModel::getUser_Resume_Model();
+        if(!$result){
+            throw new QueryDbException(['msg'=>'查询用户关联的简历失败']);
+        }
+        return $result;
+    }
+
 
     //用户关联公司？
+    public function getUser_Company(){
+        $result = UserModel::getUser_Company_Model();
+        if(!$result){
+            throw new QueryDbException(['msg'=>'查询用户关联的公司失败']);
+        }
+        return $result;
+    }
+
 
     //用户关联岗位？
+    public function getUser_Job(){
+        $result = UserModel::getUser_Job_Model();
+        if(!$result){
+            throw new QueryDbException(['msg'=>'查询用户关联的岗位失败']);
+        }
+        return $result;
+    }
 
 }

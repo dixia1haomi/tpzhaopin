@@ -16,6 +16,10 @@ class Update_Job_Validate extends BaseValidate
     protected $rule = [
         'id' => 'require',
         'job_name' => 'require|isNotEmpty',
-        'detailed_address' => 'require'
+        'company_id' => 'number',
+        'pay_level' => 'require',
+        'work_area' => 'require',
+        'detailed_address' => 'require',
+        'job_description' => 'require'
     ];
 }

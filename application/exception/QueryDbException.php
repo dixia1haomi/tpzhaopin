@@ -11,7 +11,7 @@ namespace app\exception;
 
 class QueryDbException extends BaseException
 {
-    public $code = 400;
+    public $code = 201;
 
     public $msg = 'QueryDbException';
 

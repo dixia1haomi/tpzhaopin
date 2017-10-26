@@ -9,7 +9,9 @@
 namespace app\api\service;
 
 
+use app\exception\CheckParamException;
 use app\exception\TokenException;
+use app\extra\Enum;
 use think\Exception;
 use think\Request;
 
@@ -73,7 +75,18 @@ class BaseToken
     //获取token中的uid值
     public static function get_Token_Uid(){
         $uid = self::get_Token_Value_Vars('uid');
-        return $uid;
+        $scope = self::get_Token_Value_Vars('scope');
+
+        //如果是super
+        if($scope == Enum::Super){               // 只有Super权限才可以自己传入uid,且必须在get参数中，post不接受任何uid字段
+            $id = input('get.id');
+            if(!$id){
+                throw new CheckParamException(['msg' => '没有指定要操作的对象']);
+            }
+            return $id;
+        }else{
+            return $uid;
+        }
     }
 
 

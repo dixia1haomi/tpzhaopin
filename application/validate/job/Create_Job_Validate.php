@@ -14,8 +14,10 @@ use app\validate\BaseValidate;
 class Create_Job_Validate extends BaseValidate
 {
     protected $rule = [
-        'job_name' => 'require|isNotEmpty',
         'company_id' => 'number',
-        'detailed_address' => 'require'
+        'job_name' => 'require|isNotEmpty',
+        'pay_level' => 'number',
+        'detailed_address' => 'require',
+        'work_area' => 'number',
     ];
 }
