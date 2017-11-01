@@ -47,7 +47,7 @@ class User
     public function getUser_Detail(){
         $result = UserModel::getUser_Detail_Model();
         if(!$result){
-            throw new QueryDbException(['msg'=>'查询用户失败']);
+            throw new QueryDbException(['msg'=>'查询用户失败','code'=>401]);
         }
         return $result;
     }
@@ -60,7 +60,7 @@ class User
     public function getUser_Resume(){
         $result = UserModel::getUser_Resume_Model();
         if(!$result){
-            throw new QueryDbException(['msg'=>'查询用户关联的简历失败']);
+            throw new QueryDbException(['msg'=>'查询用户关联的简历失败','code'=>401]);
         }
         return $result;
     }
@@ -70,7 +70,7 @@ class User
     public function getUser_Company(){
         $result = UserModel::getUser_Company_Model();
         if(!$result){
-            throw new QueryDbException(['msg'=>'查询用户关联的公司失败']);
+            throw new QueryDbException(['msg'=>'查询用户关联的公司失败','code'=>401]);
         }
         return $result;
     }
@@ -80,7 +80,7 @@ class User
     public function getUser_Job(){
         $result = UserModel::getUser_Job_Model();
         if(!$result){
-            throw new QueryDbException(['msg'=>'查询用户关联的岗位失败']);
+            throw new QueryDbException(['msg'=>'查询用户关联的岗位失败','code'=>401]);
         }
         return $result;
     }

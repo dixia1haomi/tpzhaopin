@@ -18,10 +18,10 @@ Route::post('api/token/user','api/token/getToken'); //获取Token
 
 
 //User组
-Route::post('api/user','api/user/getUser_Detail'); //获取Token
-Route::post('api/user/job','api/user/getUser_Job'); //获取Token
-Route::post('api/user/company','api/user/getUser_Company'); //获取Token
-Route::post('api/user/resume','api/user/getUser_Resume'); //获取Token
+Route::post('api/user','api/user/getUser_Detail'); //查询用户详细信息
+Route::post('api/user/job','api/user/getUser_Job'); //查询用户关联的岗位
+Route::post('api/user/company','api/user/getUser_Company'); //查询用户关联的公司
+Route::post('api/user/resume','api/user/getUser_Resume'); //查询用户关联的简历
 
 
 //岗位组
@@ -33,15 +33,15 @@ Route::post('api/job/delete','api/job/delete_Job'); //删除岗位
 
 
 //公司组
-Route::get('api/company/:id','api/company/get_Company_Detail'); //查询公司详细信息
+Route::get('api/company/detail/:id','api/company/get_Company_Detail'); //查询公司详细信息
 Route::post('api/company/create','api/company/create_Company'); //创建公司
 Route::post('api/company/update','api/company/update_Company'); //更新公司
 Route::post('api/company/delete','api/company/delete_Company'); //删除公司
 
 
 //简历组
-Route::get('api/resume','api/resume/select_Resume'); //查询简历列表
-Route::get('api/resume/:id','api/resume/find_Resume'); //查询简历详细信息
+Route::get('api/resume/:area','api/resume/select_Resume'); //查询简历列表
+Route::get('api/resume/detail/:id','api/resume/find_Resume'); //查询简历详细信息
 Route::post('api/resume/create','api/resume/create_Resume'); //新增简历
 Route::post('api/resume/update','api/resume/update_Resume'); //更新简历
 Route::post('api/resume/delete','api/resume/delete_Resume'); //删除简历

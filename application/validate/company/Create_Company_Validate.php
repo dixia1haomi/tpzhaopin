@@ -16,5 +16,10 @@ class Create_Company_Validate extends BaseValidate
     protected $rule = [
         'company_name' => 'require|isNotEmpty',
         'company_size' => 'number',
+        'company_nature' => 'number',
+        'company_industry' => 'number',
+        'company_address' => 'require',
+        'company_description' => 'require'
     ];
 }
+

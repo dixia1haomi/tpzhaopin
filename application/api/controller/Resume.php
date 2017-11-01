@@ -24,10 +24,10 @@ class Resume
      * get
      * 必须携带token
      */
-    public function select_Resume(){
-        $result = ResumeModel::all();
+    public function select_Resume($area){
+        $result = ResumeModel::get_Resume_List_Model($area);
         if(!$result){
-            throw new QueryDbException(['msg' => '查询简历列表失败']);
+            throw new QueryDbException(['msg' => '查询简历列表失败','code'=>401]);
         }
         return $result;
     }
@@ -40,7 +40,7 @@ class Resume
     public function find_Resume($id){
         $result = ResumeModel::get($id);
         if(!$result){
-            throw new QueryDbException(['msg' => '查询简历列表失败']);
+            throw new QueryDbException(['msg' => '查询简历列表失败','code'=>401]);
         }
         return $result;
     }
@@ -66,7 +66,7 @@ class Resume
         $result = $resumeModel->isUpdate(false)->save($data);
 
         if(!$result){
-            throw new QueryDbException(['msg' => '新增简历失败，create_resume']);
+            throw new QueryDbException(['msg' => '新增简历失败，create_resume','code'=>401]);
         }
         return new QueryDbException(['msg' => '新增简历成功,ID='.$resumeModel->id.'，来自create_resume']);
     }
@@ -91,7 +91,7 @@ class Resume
         $result = $resumeModel->isUpdate(true)->save($data);
 
         if(!$result){
-            throw new QueryDbException(['msg' => '更新简历失败，update_resume']);
+            throw new QueryDbException(['msg' => '更新简历失败，update_resume','code'=>401]);
         }
         return new QueryDbException(['msg' => '更新简历成功,ID='.$resumeModel->id.'，来自update_resume']);
     }
@@ -109,7 +109,7 @@ class Resume
         $result = ResumeModel::destroy($resume_id); //删除数据
 
         if(!$result){
-            throw new QueryDbException(['msg'=>'删除简历信息失败,来自delete_resume']);
+            throw new QueryDbException(['msg'=>'删除简历信息失败,来自delete_resume','code'=>401]);
         }
         return new QueryDbException(['msg'=>'删除简历成功,影响数据'.$result.'条，来自delete_resume']);
     }

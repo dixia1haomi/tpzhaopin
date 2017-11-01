@@ -14,12 +14,17 @@ use app\validate\BaseValidate;
 class Update_Job_Validate extends BaseValidate
 {
     protected $rule = [
-        'id' => 'require',
-        'job_name' => 'require|isNotEmpty',
+        'id'=>'number',
         'company_id' => 'number',
-        'pay_level' => 'require',
-        'work_area' => 'require',
+        'job_name' => 'require|isNotEmpty',
+        'pay_level' => 'number',
         'detailed_address' => 'require',
+        'work_area' => 'number',
+        'welfare' => 'require',
+        'ments_number' => 'number',
+        'ments_exp' => 'number',
+        'ments_sex' => 'number',
+        'ments_education' => 'number',
         'job_description' => 'require'
     ];
 }

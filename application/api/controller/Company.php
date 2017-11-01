@@ -36,7 +36,7 @@ class Company
 
         $data = CompanyModel::get_Company_Detail_Model($id);
         if(!$data){
-            throw new QueryDbException(['msg'=>'查询数据不存在,来自查询公司详细信息']);
+            throw new QueryDbException(['msg'=>'查询数据不存在,来自查询公司详细信息','code'=>401]);
         }
         return $data;
     }
@@ -68,7 +68,7 @@ class Company
         $companyModel = new CompanyModel();
         $result = $companyModel->isUpdate(false)->save($filter_dataArray);  //显式新增，返回写入记录数
         if(!$result){
-           throw new QueryDbException(['msg' => '新增公司失败，来自create_company()']);
+           throw new QueryDbException(['msg' => '新增公司失败，来自create_company()','code'=>401]);
         }
         return new QueryDbException(['msg' => '新增公司成功,ID='.$companyModel->id.'，来自create_company()']);
     }
@@ -94,7 +94,7 @@ class Company
         $companyModel = new CompanyModel();
         $result = $companyModel->isUpdate(true)->save($data);  //显式更新，返回写入记录数
         if(!$result){
-            throw new QueryDbException(['msg' => '更新公司失败，来自update_company()']);
+            throw new QueryDbException(['msg' => '更新公司失败，来自update_company()','code'=>401]);
         }
         return new QueryDbException(['msg' => '更新公司成功,ID='.$companyModel->id.'，来自create_company()']);
     }
@@ -111,7 +111,7 @@ class Company
         $result = CompanyModel::destroy($company_id);
 
         if(!$result){
-            throw new QueryDbException(['msg'=>'删除公司信息失败,来自delete_Company()']);
+            throw new QueryDbException(['msg'=>'删除公司信息失败,来自delete_Company()','code'=>401]);
         }
         return new QueryDbException(['msg'=>'删除公司成功,影响数据'.$result.'条，来自delete_Company()']);
     }

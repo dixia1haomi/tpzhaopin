@@ -18,11 +18,11 @@ class Job extends BaseModel
 
     //获取器-> 查出数据来处理
     // work_area工作范围字段用int类型储存-> 0=>'曲靖',1=>'麒麟',2=>'沾益'
-    public function getWorkAreaAttr($value)
-    {
-        $status = [0=>'曲靖',1=>'麒麟',2=>'沾益'];
-        return $status[$value];
-    }
+//    public function getWorkAreaAttr($value)
+//    {
+//        $status = [0=>'曲靖',1=>'麒麟',2=>'沾益'];
+//        return $status[$value];
+//    }
 
     //只显示-工作名称-薪资水平-工作范围-公司关联信息-福利-创建时间
 //    protected $job_List_visible = ['id','job_name','pay_level','work_area','company_name','company','welfare','create_time'];

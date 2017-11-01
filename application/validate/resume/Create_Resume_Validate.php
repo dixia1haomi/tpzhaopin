@@ -14,8 +14,19 @@ use app\validate\BaseValidate;
 class Create_Resume_Validate extends BaseValidate
 {
     protected $rule = [
-        'work_exp' => 'require',
-//        'company_id' => 'number',
-//        'detailed_address' => 'require'
+        'name' => 'require',
+        'sex' => 'number',
+        'age' => 'number',
+        'phone' => 'number',
+        'education' => 'number',
+        'expectation_pay' => 'number',
+        'current_state' => 'number',
+        'expectation_position' => 'number',
+        'report_time' => 'number',
+        'work_exp' => 'number',
+        'work_nature' => 'number',
+        'work_place' => 'number',
+        'resume_description' => 'require',
+
     ];
 }
