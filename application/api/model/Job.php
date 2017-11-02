@@ -34,20 +34,21 @@ class Job extends BaseModel
         if($work_area == 0){
             $data = self::
             field('job_description,Job_requirements,delete_time',true)->
-            order('set_top desc,welfare desc')->
+            order('set_top desc,update_time desc')->
             with(['company'=>function($query){$query->withField('id,company_name');}])->
             select();
         }else{
             $data = self::
             field('job_description,Job_requirements,delete_time',true)->
             where('work_area',$work_area)->
-            order('set_top desc,welfare desc')->
+            order('set_top desc,update_time desc')->
             with(['company'=>function($query){$query->withField('id,company_name');}])->
             select();
         }
 
         return $data;
     }
+
     //定义关联方法->工作列表关联到公司
     public function company(){
         return $this->hasOne('company','id','company_id')->bind('company_name');
@@ -56,8 +57,9 @@ class Job extends BaseModel
 
 
     //查询岗位【详细信息】API
+    //定义关联方法->公司id关联到岗位（一对多,方法定义在公司模型下companyInJob ）
     public static function get_Job_Detail_Model($id){
-        $find = self::with('company')->find($id);
+        $find = self::with( ['company'=>function($query){$query->with('companyInJob');}] )->find($id);
         $find->setInc('page_view'); //查询岗位详情时让浏览量+1
         return $find;
     }

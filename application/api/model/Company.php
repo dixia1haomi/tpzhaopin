@@ -15,7 +15,7 @@ class Company extends BaseModel
 
     //查询公司详细信息
     public static function get_Company_Detail_Model($id){
-        return self::with('companyInJob')->find($id);
+//        return self::with('companyInJob')->find($id);  // 废弃不用了，改到Job模型中用了
     }
 
 
@@ -35,10 +35,12 @@ class Company extends BaseModel
     }
 
 
-    //--------------关联方法------------//
+    //--------------之前是查公司详细信息关联岗位--现在改成查岗位详细信息的时候关联公司并且再关联该公司岗位---------//
 
-    //定义关联方法->公司关联到岗位（一对多）
+    //定义关联方法->公司id关联到岗位（一对多,该方法在Job模型中使用）
     public function companyInJob(){
         return $this->hasMany('job','company_id','id');
     }
+
+
 }

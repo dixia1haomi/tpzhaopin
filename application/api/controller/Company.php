@@ -34,7 +34,7 @@ class Company
 
         (new MustBePositiveIntValidate())->goCheck();
 
-        $data = CompanyModel::get_Company_Detail_Model($id);
+        $data = CompanyModel::get($id);
         if(!$data){
             throw new QueryDbException(['msg'=>'查询数据不存在,来自查询公司详细信息','code'=>401]);
         }
