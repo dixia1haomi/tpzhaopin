@@ -58,7 +58,7 @@ class Job extends BaseModel
 
     //查询岗位【详细信息】API
     //定义关联方法->公司id关联到岗位（一对多,方法定义在公司模型下companyInJob ）
-    public static function get_Job_Detail_Model($id){
+    public static function  get_Job_Detail_Model($id){
         $find = self::with( ['company'=>function($query){$query->with('companyInJob');}] )->find($id);
         $find->setInc('page_view'); //查询岗位详情时让浏览量+1
         return $find;

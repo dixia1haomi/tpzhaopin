@@ -41,7 +41,7 @@ class User extends BaseModel
     }
     //用户关联简历->关联方法
     public function userResume(){
-        return $this->hasMany('resume','user_id','id');
+        return $this->hasOne('resume','user_id','id');
     }
 
 
