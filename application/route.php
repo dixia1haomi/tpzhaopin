@@ -34,7 +34,6 @@ Route::post('api/job/delete','api/job/delete_Job'); //删除岗位
 
 //公司组
 Route::get('api/company/detail/:id','api/company/get_Company_Detail'); //查询公司详细信息
-//Route::get('api/company/company_get_job/:id','api/company/company_get_Job_List'); //根据公司id查询关联的岗位列表
 Route::post('api/company/create','api/company/create_Company'); //创建公司
 Route::post('api/company/update','api/company/update_Company'); //更新公司
 Route::post('api/company/delete','api/company/delete_Company'); //删除公司

@@ -32,18 +32,9 @@ class Job extends BaseModel
     public static function get_Job_List_Model($work_area){
 
         if($work_area == 0){
-            $data = self::
-            field('job_description,Job_requirements,delete_time',true)->
-            order('set_top desc,update_time desc')->
-            with(['company'=>function($query){$query->withField('id,company_name');}])->
-            select();
+            $data = self::order('set_top desc,update_time desc')->with(['company'])->select();
         }else{
-            $data = self::
-            field('job_description,Job_requirements,delete_time',true)->
-            where('work_area',$work_area)->
-            order('set_top desc,update_time desc')->
-            with(['company'=>function($query){$query->withField('id,company_name');}])->
-            select();
+            $data = self::where('work_area',$work_area)->order('set_top desc,update_time desc')->with(['company'])->select();
         }
 
         return $data;

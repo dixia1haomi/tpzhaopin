@@ -26,7 +26,7 @@ class Company
     //自己访问自己的信息 -> 根据客户端缓存的token查询客户的uid -> 根据uid查询所关联的公司id,岗位id,简历id
 
     /*
-     * 查询公司详细信息API(并且关联公司发布的所有岗位)
+     * 查询公司详细信息API
      * @param number  $id
      * @return array | null
      */

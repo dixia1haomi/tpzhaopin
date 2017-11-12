@@ -53,7 +53,7 @@ class User extends BaseModel
     }
     //用户关联公司->关联方法
     public function userCompany(){
-        return $this->hasMany('company','user_id','id');
+        return $this->hasOne('company','user_id','id');
     }
 
 

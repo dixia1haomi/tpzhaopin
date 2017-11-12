@@ -52,13 +52,13 @@ class BaseToken
         $token_key = $info['token_key'];
 
         if(empty($token_key)){
-            throw new TokenException(['msg' => '必须携带token，来自get_Token_Value_Vars']);
+            throw new TokenException(['msg' => '必须携带token，来自get_Token_Value_Vars','code'=>401]);
         }
         //根据token_key取缓存,并判断是否获取成功
         $vars = cache($token_key);
         //如果获取缓存失败，抛出异常
         if(!$vars){
-            throw new TokenException(['msg' => '用token_key取缓存中的token失败，来自get_Token_Value_Vars']);
+            throw new TokenException(['msg' => '用token_key取缓存中的token失败，来自get_Token_Value_Vars','code'=>401]);
         }else{
             //获取缓存成功.判断取出来的缓存是不是数组（因为之前存入的时候是JSON字符串，转化为组数好操作）
             if(!is_array($vars)){
@@ -83,7 +83,7 @@ class BaseToken
         if($scope == Enum::Super){               // 只有Super权限才可以自己传入uid,且必须在get参数中，post不接受任何uid字段
             $id = input('get.id');
             if(!$id){
-                throw new CheckParamException(['msg' => '没有指定要操作的对象']);
+                throw new CheckParamException(['msg' => '没有指定要操作的对象','code'=>401]);
             }
             return $id;
         }else{

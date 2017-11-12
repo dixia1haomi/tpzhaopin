@@ -16,7 +16,9 @@ class Create_Job_Validate extends BaseValidate
     protected $rule = [
         'company_id' => 'number',
         'job_name' => 'require|isNotEmpty',
+        'job_user_name' => 'require',
         'pay_level' => 'number',
+        'phone' => 'require',
         'detailed_address' => 'require',
         'work_area' => 'number',
         'welfare' => 'require',
