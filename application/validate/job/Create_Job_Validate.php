@@ -19,13 +19,17 @@ class Create_Job_Validate extends BaseValidate
         'job_user_name' => 'require',
         'pay_level' => 'number',
         'phone' => 'require',
-        'detailed_address' => 'require',
+//        'detailed_address' => 'require',
         'work_area' => 'number',
         'welfare' => 'require',
         'ments_number' => 'number',
         'ments_exp' => 'number',
         'ments_sex' => 'number',
         'ments_education' => 'number',
-        'job_description' => 'require'
+        'job_description' => 'require',
+        'map_address' => 'require',
+        'map_name' => 'require',
+        'map_longitude' => 'require',
+        'map_latitude' => 'require',
     ];
 }
