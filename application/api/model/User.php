@@ -28,11 +28,24 @@ class User extends BaseModel
 
     //新增用户,返回id
     public static function create_user($openid){
-        $user = self::create(['openid' => $openid]);
+        $user = self::create(['openid'=>$openid]);
         return $user->id;
     }
 
     //更新用户
+    public static function update_user($wx_userinfo){
+        $uid = BaseToken::get_Token_Uid();
+        $arr = [
+            'id' => $uid,
+            'gender' => $wx_userinfo['gender'],
+            'avatar_url' => $wx_userinfo['avatar_url'],
+            'nickname' => $wx_userinfo['nickname'],
+            'province' => $wx_userinfo['province'],
+            'city' => $wx_userinfo['city']
+        ];
+
+         return self::update($arr);
+    }
 
     //用户关联简历？
     public static function getUser_Resume_Model(){

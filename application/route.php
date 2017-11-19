@@ -15,6 +15,9 @@ use think\Route;
 
 //token组
 Route::post('api/token/user','api/token/getToken'); //获取Token
+Route::post('api/token/verify','api/token/verifyToken'); //检查Token是否有效
+
+
 
 
 //User组
@@ -22,6 +25,8 @@ Route::post('api/user','api/user/getUser_Detail'); //查询用户详细信息
 Route::post('api/user/job','api/user/getUser_Job'); //查询用户关联的岗位
 Route::post('api/user/company','api/user/getUser_Company'); //查询用户关联的公司
 Route::post('api/user/resume','api/user/getUser_Resume'); //查询用户关联的简历
+//user - 微信
+Route::post('api/user/wx_userinfo','api/user/getWx_userInfo'); //查询用户详细信息
 
 
 //岗位组

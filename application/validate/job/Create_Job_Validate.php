@@ -17,6 +17,7 @@ class Create_Job_Validate extends BaseValidate
         'company_id' => 'number',
         'job_name' => 'require|isNotEmpty',
         'job_user_name' => 'require',
+        'job_type' => 'number',
         'pay_level' => 'number',
         'phone' => 'require',
 //        'detailed_address' => 'require',

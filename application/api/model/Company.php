@@ -13,9 +13,9 @@ namespace app\api\model;
 class Company extends BaseModel
 {
 
-    //查询公司详细信息
+    //查询公司详细信息->并且关联公司名下的岗位
     public static function get_Company_Detail_Model($id){
-//        return self::with('companyInJob')->find($id);  // 废弃不用了，改到Job模型中用了
+        return self::with('companyInJob')->find($id);
     }
 
 
@@ -25,13 +25,13 @@ class Company extends BaseModel
     }
 
     //更新公司信息*
-    public function update_Company_Model($id){
+    public static function update_Company_Model($id){
 
     }
 
     //删除公司信息*
-    public function delete_Company_Model($id){
-
+    public static function delete_Company_Model(){
+//        return self::with('companyInJob');
     }
 
 

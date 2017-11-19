@@ -85,4 +85,15 @@ class User
         return $result;
     }
 
+
+    // 微信用户信息
+    public function getWx_userInfo(){
+        $wx_userinfo = input('post.');
+        $update = UserModel::update_user($wx_userinfo);
+        if(!$update){
+            throw new QueryDbException(['msg'=>'更新用户信息失败','code'=>401]);
+        }
+
+        return $update;
+    }
 }

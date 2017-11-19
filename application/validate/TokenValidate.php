@@ -12,10 +12,12 @@ namespace app\validate;
 class TokenValidate extends BaseValidate
 {
     protected $rule = [
-        'code' => 'require|isNotEmpty'
+        'code' => 'require|isNotEmpty',
+//        'userinfo' => 'require|isNotEmpty'
     ];
 
     protected $message = [
-        'code' => 'code不能为空.'
+        'code' => 'code不能为空.',
+//        'userinfo' => 'userinfo不能为空.'
     ];
 }

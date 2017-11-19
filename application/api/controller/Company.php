@@ -26,7 +26,7 @@ class Company
     //自己访问自己的信息 -> 根据客户端缓存的token查询客户的uid -> 根据uid查询所关联的公司id,岗位id,简历id
 
     /*
-     * 查询公司详细信息API
+     * 查询公司详细信息API-》并且关联公司名下的岗位
      * @param number  $id
      * @return array | null
      */
@@ -34,7 +34,8 @@ class Company
 
         (new MustBePositiveIntValidate())->goCheck();
 
-        $data = CompanyModel::get($id);
+//        $data = CompanyModel::get($id);
+        $data = CompanyModel::get_Company_Detail_Model($id);
         if(!$data){
             throw new QueryDbException(['msg'=>'查询数据不存在,来自查询公司详细信息','code'=>401]);
         }
@@ -114,6 +115,7 @@ class Company
             throw new QueryDbException(['msg'=>'删除公司信息失败,来自delete_Company()','code'=>401]);
         }
         return new QueryDbException(['msg'=>'删除公司成功,影响数据'.$result.'条，来自delete_Company()']);
+
     }
 
 }

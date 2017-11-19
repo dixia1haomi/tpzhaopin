@@ -29,6 +29,8 @@ class UserToken extends BaseToken
         $this->loginUrl = sprintf(config('wx_config.login_url'),$this->wxAppID,$this->wxAppSecret,$this->code);
     }
 
+
+
     //用户登录
     //获取token
     //发送网络请求，获取微信返回的结果,生成token缓存
@@ -67,7 +69,7 @@ class UserToken extends BaseToken
         if($user){
             $uid = $user->id;
         }else{
-            $uid = UserModel::create_user($openid);
+            $uid = UserModel::create_user($openid); // 携带openid和用户信息去创建用户
         }
         return $this->save_Cache_Token($wxResult,$uid);    //保存token缓存，返回token的key
     }

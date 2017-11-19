@@ -12,6 +12,7 @@ namespace app\api\service;
 use app\exception\CheckParamException;
 use app\exception\TokenException;
 use app\extra\Enum;
+use think\Cache;
 use think\Exception;
 use think\Request;
 
@@ -88,6 +89,20 @@ class BaseToken
             return $id;
         }else{
             return $uid;
+        }
+    }
+
+
+
+    //检查token是否有效
+    public static function verifyToken($token)
+    {
+        $exist = Cache::get($token);
+        if($exist){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
