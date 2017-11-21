@@ -66,12 +66,13 @@ class Company
         $filter_dataArray['user_id'] = $uid;
 
         //新增记录
-        $companyModel = new CompanyModel();
-        $result = $companyModel->isUpdate(false)->save($filter_dataArray);  //显式新增，返回写入记录数
+//        $companyModel = new CompanyModel();
+//        $result = $companyModel->isUpdate(false)->save($filter_dataArray);  //显式新增，返回写入记录数
+        $result = CompanyModel::create($filter_dataArray);
         if(!$result){
            throw new QueryDbException(['msg' => '新增公司失败，来自create_company()','code'=>401]);
         }
-        return new QueryDbException(['msg' => '新增公司成功,ID='.$companyModel->id.'，来自create_company()']);
+        return new QueryDbException(['msg' => '新增公司成功,ID='.$result->id.'，来自create_company()']);
     }
 
 
@@ -83,21 +84,25 @@ class Company
      */
     public function update_Company(){
         //获取更新数据的id
-        BaseToken::get_Token_Uid();  //用户验证
-//        $company_id = input('company_id');
+        $uid = BaseToken::get_Token_Uid();  //用户验证
 
         //获取并过滤数据
         $companyValidate = new Update_Company_Validate();
         $companyValidate->goCheck();    //验证rule
         $data = $companyValidate->getDataByRule(input('post.'));   //过滤数据
 
+        //验证用户是否合法
+        $company = CompanyModel::get($data['id']);
+        BaseToken::isValidOperate($company['user_id'],$uid);    //传入user_id和uid,验证不通过抛出错误
+
         //更新
-        $companyModel = new CompanyModel();
-        $result = $companyModel->isUpdate(true)->save($data);  //显式更新，返回写入记录数
+//        $companyModel = new CompanyModel();
+//        $result = $companyModel->isUpdate(true)->save($data);  //显式更新，返回写入记录数
+        $result = CompanyModel::update($data);
         if(!$result){
             throw new QueryDbException(['msg' => '更新公司失败，来自update_company()','code'=>401]);
         }
-        return new QueryDbException(['msg' => '更新公司成功,ID='.$companyModel->id.'，来自create_company()']);
+        return new QueryDbException(['msg' => '更新公司成功,ID='.$result->id.'，来自create_company()']);
     }
 
 
@@ -107,9 +112,10 @@ class Company
      * 用户身份验证***
      */
     public function delete_Company(){
-        BaseToken::get_Token_Uid();  //用户验证
+        $uid = BaseToken::get_Token_Uid();  //用户验证
         $company_id = input('id');
-        $result = CompanyModel::destroy($company_id);
+
+        $result = CompanyModel::destroy(['id'=>$company_id,'user_id'=>$uid]);
 
         if(!$result){
             throw new QueryDbException(['msg'=>'删除公司信息失败,来自delete_Company()','code'=>401]);

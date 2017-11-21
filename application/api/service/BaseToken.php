@@ -93,7 +93,6 @@ class BaseToken
     }
 
 
-
     //检查token是否有效
     public static function verifyToken($token)
     {
@@ -106,5 +105,18 @@ class BaseToken
         }
     }
 
+
+    //检查用户身份是否合法
+    public static function isValidOperate($checkUser_id,$uid)
+    {
+        if(!$checkUser_id){
+            throw new Exception('检查user_id时必须传入一个被检查的user_id,来自isValidOperate');
+        }
+//        $uid = self::get_Token_Uid();
+        if($checkUser_id != $uid){
+            throw new Exception('尝试修改别人的数据，isValidOperate');
+        }
+        return true;
+    }
 
 }

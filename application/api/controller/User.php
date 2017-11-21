@@ -86,7 +86,7 @@ class User
     }
 
 
-    // 微信用户信息
+    // 获取微信用户信息写入数据库
     public function getWx_userInfo(){
         $wx_userinfo = input('post.');
         $update = UserModel::update_user($wx_userinfo);

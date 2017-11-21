@@ -32,7 +32,7 @@ class User extends BaseModel
         return $user->id;
     }
 
-    //更新用户
+    //获取微信用户信息更新到用户数据库中-(客户端授权userinfo后调用)
     public static function update_user($wx_userinfo){
         $uid = BaseToken::get_Token_Uid();
         $arr = [

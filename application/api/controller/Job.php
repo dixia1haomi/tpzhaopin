@@ -67,13 +67,12 @@ class Job
 
         //加入uid -> 写入数据库
         $data['user_id'] = $uid;
+        $result = JobModel::create($data);
 
-        $jobModel = new JobModel();
-        $result = $jobModel->isUpdate(false)->save($data);
         if(!$result){
             throw new QueryDbException(['msg' => '新增岗位失败，create_job','code'=>401]);
         }
-        return new QueryDbException(['msg' => '新增岗位成功,ID='.$jobModel->id.'，来自create_Job()']);
+        return new QueryDbException(['msg' => '新增岗位成功,ID='.$result->id.'，来自create_Job()']);
     }
 
 
@@ -84,28 +83,31 @@ class Job
      */
     public function update_Job(){
         //接受uid，接受岗位id
-        BaseToken::get_Token_Uid(); //用户验证
+        $uid = BaseToken::get_Token_Uid(); //用户验证
 
         //参数效验 -> 过滤参数
         $jobValidate = new Update_Job_Validate();
         $jobValidate->goCheck();    //验证rule
         $data = $jobValidate->getDataByRule(input('post.'));    //过滤参数
 
+        //验证用户是否合法
+        $job = JobModel::get($data['id']);
+        BaseToken::isValidOperate($job['user_id'],$uid);    //不合法会抛出异常
+
         //更新数据库
-        $jobModel = new JobModel();
-        $result = $jobModel->isUpdate(true)->save($data);
+        $result = JobModel::update($data);
         if(!$result){
             throw new QueryDbException(['msg' => '更新岗位失败，来自update_Job()','code'=>401]);
         }
-        return new QueryDbException(['msg' => '更新公司成功,ID='.$jobModel->id.'，来自update_Job()']);
+        return new QueryDbException(['msg' => '更新公司成功,ID='.$result->id.'，来自update_Job()']);
     }
 
     //删除
     public function delete_Job(){
         //接受uid，接受岗位id
-        BaseToken::get_Token_Uid();  //用户验证
+        $uid = BaseToken::get_Token_Uid();  //用户验证
         $job_id = input('id');
-        $result = JobModel::destroy($job_id);
+        $result = JobModel::destroy(['id'=>$job_id,'user_id'=>$uid]);   //条件删除，也可以改成更新的先验证用户是否合法
 
         if(!$result){
             throw new QueryDbException(['msg'=>'删除岗位信息失败,来自delete_Job()','code'=>401]);

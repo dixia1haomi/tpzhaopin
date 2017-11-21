@@ -27,6 +27,5 @@ class Create_Resume_Validate extends BaseValidate
         'work_nature' => 'number',
         'work_place' => 'number',
         'resume_description' => 'require',
-
     ];
 }
