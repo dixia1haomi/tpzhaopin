@@ -9,8 +9,11 @@
 namespace app\api\controller;
 
 
+use app\api\model\ThirdApp;
+use app\api\service\AppToken;
 use app\api\service\UserToken;
 use app\exception\TokenException;
+use app\validate\AppTokenValidate;
 use app\validate\TokenValidate;
 use app\api\service\BaseToken;
 
@@ -43,5 +46,24 @@ class Token
         $valid = BaseToken::verifyToken($token);
 
         return ['isValid' => $valid];
+    }
+
+
+    /**
+     * 第三方应用获取令牌
+     * @url /app_token?
+     * @POST ac=:ac se=:secret
+     */
+    public function getAppToken($ac='', $se='')
+    {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+        header('Access-Control-Allow-Methods: GET');
+        (new AppTokenValidate())->goCheck();
+        $app = new AppToken();
+        $token = $app->getThirdAppTokenService($ac, $se);
+        return [
+            'token' => $token
+        ];
     }
 }
