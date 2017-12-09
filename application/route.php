@@ -32,11 +32,13 @@ Route::post('api/user/wx_userinfo','api/user/getWx_userInfo'); //查询用户详
 
 
 //岗位组
-Route::get('api/job/:work_area','api/job/get_Job_List'); //查询岗位列表
+Route::post('api/job','api/job/get_Job_List'); //查询岗位列表-post传多条件查询-?page=1传分页
 Route::get('api/job/detail/:id','api/job/get_Job_Detail'); //查询岗位详细信息
 Route::post('api/job/create','api/job/create_Job'); //新增岗位
 Route::post('api/job/update','api/job/update_Job'); //更新岗位
 Route::post('api/job/delete','api/job/delete_Job'); //删除岗位
+//ceshiduotiaojian
+Route::post('api/job/ceshi','api/job/ceshiJob'); //查询岗位列表
 
 
 //公司组
@@ -47,7 +49,7 @@ Route::post('api/company/delete','api/company/delete_Company'); //删除公司
 
 
 //简历组
-Route::get('api/resume/:area','api/resume/select_Resume'); //查询简历列表
+Route::post('api/resume','api/resume/select_Resume'); //查询简历列表post传多条件查询-?page=1传分页
 Route::get('api/resume/detail/:id','api/resume/find_Resume'); //查询简历详细信息
 Route::post('api/resume/create','api/resume/create_Resume'); //新增简历
 Route::post('api/resume/update','api/resume/update_Resume'); //更新简历

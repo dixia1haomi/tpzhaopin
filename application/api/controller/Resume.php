@@ -22,24 +22,27 @@ class Resume
 
     /*
      * 查询简历列表
-     * get
-     * 必须携带token
+     * post 关联用户-取头像性别
      */
-    public function select_Resume($area){
-        $result = ResumeModel::get_Resume_List_Model($area);
-        if(!$result){
-            throw new QueryDbException(['msg' => '查询简历列表失败','code'=>401]);
-        }
-        return $result;
+    public function select_Resume($page=1){
+//        $result = ResumeModel::get_Resume_List_Model($area);
+        $post = input('post.');
+        $resumeModel = new ResumeModel();
+        $data = $resumeModel->where($post)->order('set_top desc,update_time desc')->with(['resumeGuanlianUser'])->page($page,5)->select();
+//        if(!$data){
+//            throw new QueryDbException(['msg' => '查询简历列表失败','code'=>401]);
+//        }
+        return $data;
     }
 
     /*
      * 查询简历详细信息
-     * get
-     * 必须携带token
+     * get  关联用户-取头像性别
      */
     public function find_Resume($id){
-        $result = ResumeModel::get($id);
+        $resumeModel = new ResumeModel();
+        $result = $resumeModel->with(['resumeGuanlianUser'])->find($id);
+        $result->setInc('page_view'); //查询简历详情时让浏览量+1
         if(!$result){
             throw new QueryDbException(['msg' => '查询简历列表失败','code'=>401]);
         }

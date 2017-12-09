@@ -25,7 +25,9 @@ class Resume extends BaseModel
         return $data;
     }
 
-
+    public function resumeGuanlianUser(){
+        return $this->hasOne('user','id','user_id');
+    }
 
 
 }

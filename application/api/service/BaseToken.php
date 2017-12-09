@@ -53,13 +53,13 @@ class BaseToken
         $token_key = $info['token_key'];
 
         if(empty($token_key)){
-            throw new TokenException(['msg' => '必须携带token，来自get_Token_Value_Vars','code'=>401]);
+            throw new TokenException(['msg' => '必须携带token，来自get_Token_Value_Vars','code'=>501]);
         }
         //根据token_key取缓存,并判断是否获取成功
         $vars = cache($token_key);
         //如果获取缓存失败，抛出异常
         if(!$vars){
-            throw new TokenException(['msg' => '用token_key取缓存中的token失败，来自get_Token_Value_Vars','code'=>401]);
+            throw new TokenException(['msg' => '用token_key取缓存中的token失败，来自get_Token_Value_Vars','code'=>501]);
         }else{
             //获取缓存成功.判断取出来的缓存是不是数组（因为之前存入的时候是JSON字符串，转化为组数好操作）
             if(!is_array($vars)){

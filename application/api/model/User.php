@@ -74,7 +74,7 @@ class User extends BaseModel
     //用户关联岗位？
     public static function getUser_Job_Model(){
         $uid = BaseToken::get_Token_Uid();
-        return self::with('userJob')->find($uid);
+        return self::with(['userJob'=>function($query){$query->order('update_time desc');}])->find($uid);
     }
     //用户关联岗位->关联方法
     public function userJob(){

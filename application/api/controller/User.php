@@ -8,6 +8,7 @@
 
 namespace app\api\controller;
 use app\api\model\User as UserModel;
+use app\api\service\BaseToken;
 use app\exception\QueryDbException;
 
 class User

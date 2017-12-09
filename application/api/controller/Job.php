@@ -13,21 +13,33 @@ use app\api\service\BaseToken;
 use app\exception\QueryDbException;
 use app\validate\job\Create_Job_Validate;
 use app\validate\job\Update_Job_Validate;
-use app\validate\JobValidate;
+//use app\validate\JobValidate;
 use app\validate\MustBePositiveIntValidate;
 use app\api\model\Job as JobModel;
 
 class Job
 {
+    //测试多条件查询岗位列表
+//    public function ceshiJob($page=1){
+//       $get = input('post.');
+////        return $get;
+//        $jobModel = new JobModel();
+//        $data = $jobModel->where($get)->page($page,10)->select();
+//        return $data;
+//    }
+
+
     //查询岗位列表API
-    public function get_Job_List($work_area){
+    public function get_Job_List($page=1){
 
         (new MustBePositiveIntValidate())->goCheck();
 
-        $jobList = JobModel::get_Job_List_Model($work_area);
-        if(!$jobList){
-            throw new QueryDbException(['msg'=>'查询数据不存在,来自查询岗位列表','code'=>401]);
-        }
+        $post = input('post.');
+        $jobModel = new JobModel();
+        $jobList = $jobModel->where($post)->order('set_top desc,update_time desc')->with(['company'])->page($page,5)->select();
+//        if(!$jobList){
+//            throw new QueryDbException(['msg'=>'查询数据不存在,来自查询岗位列表','code'=>401]);
+//        }
         return $jobList;
     }
 
@@ -113,6 +125,7 @@ class Job
             throw new QueryDbException(['msg'=>'删除岗位信息失败,来自delete_Job()','code'=>401]);
         }
         return new QueryDbException(['msg'=>'删除公司成功,影响数据'.$result.'条，来自delete_Job()']);
+//        return $job_id;
     }
 
 }
